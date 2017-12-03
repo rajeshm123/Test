@@ -1,0 +1,21 @@
+---
+- hosts: tomcatServer
+  #vars:
+  #- warName: hello.war
+  #- warRemotePath: /path/to/put/war
+
+  tasks:
+  #- name: Download WAR to server
+   # command: wget http://example.com/file.war -O {{ warRemotePath }}/{{ warName }}
+  
+  - name: Unzip WAR file
+    unarchive: src=https://github.com/rajeshm123/test/blob/master/sample.war dest=C:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/ROOT/ copy=no mode=0755 owner=tomcat8.5 group=tomcat8.5
+    notify:
+        - restart tomcat8.5
+   
+  #- name: Delete remote war file
+   # file: path={{ warRemotePath }}/{{ warName }} state=absent
+
+  handlers:
+    - name: Restart tomcat8.5
+      service: name=tomcat8.5 state=restarted
